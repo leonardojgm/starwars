@@ -1,3 +1,65 @@
-<mat-card appearance="outlined">
-  <mat-card-content>Naves</mat-card-content>
+<form>
+  <mat-form-field class="campo-busca">
+    <mat-label>Buscar nave</mat-label>
+    <input matInput (keyup)="buscar($event)">
+  </mat-form-field>
+</form>
+<div class="tabela-container">
+  <table mat-table [dataSource]="naves" multiTemplateDataRows class="mat-elevation-z8" *ngIf="naves && naves.length > 0 && !carregando">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let element" (click)="expandirLinha(element)" class="linha-clicavel">
+        {{element.name}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="manufacturer">
+      <th mat-header-cell *matHeaderCellDef>Fabricante</th>
+      <td mat-cell *matCellDef="let element" (click)="expandirLinha(element)" class="linha-clicavel">
+        {{element.manufacturer}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="length">
+      <th mat-header-cell *matHeaderCellDef>Tamanho</th>
+      <td mat-cell *matCellDef="let element" (click)="expandirLinha(element)" class="linha-clicavel">
+        {{element.length}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="passengers">
+      <th mat-header-cell *matHeaderCellDef>Passageiros</th>
+      <td mat-cell *matCellDef="let element" (click)="expandirLinha(element)" class="linha-clicavel">
+        {{element.passengers}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="detalhes" *ngIf="element === naveExpandida">
+          <p><strong>Modelo:</strong> {{element.model}}</p>
+          <p><strong>Custo em créditos:</strong> {{element.cost_in_credits}}</p>
+          <p><strong>Máximo velocidade atmosférica:</strong> {{element.max_atmosphering_speed}}</p>
+          <p><strong>Capacidade de carga:</strong> {{element.cargo_capacity}}</p>
+          <p><strong>Classe de nave:</strong> {{element.starship_class}}</p>
+          <p><strong>Crew:</strong> {{element.crew}}</p>
+          <p><strong>Consumiveis:</strong> {{element.consumables}}</p>
+          <p><strong>Hyperdrive:</strong> {{element.hyperdrive_rating}}</p>
+          <p><strong>MGLT:</strong> {{element.MGLT}}</p>
+          <p><strong>Criação:</strong> {{element.created}}</p>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linha-clicavel"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="linha-expandida"></tr>
+  </table>
+</div>
+<mat-card *ngIf="!naves || naves.length == 0" appearance="outlined">
+  <mat-card-content>Nenhuma nave encontrada!</mat-card-content>
 </mat-card>
+<mat-paginator
+  [length]="totalDeNaves"
+  [pageSize]="tamanhoPagina"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>
+<div *ngIf="carregando" class="loading-container">
+  <mat-spinner color="black"></mat-spinner>
+</div>

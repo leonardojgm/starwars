@@ -1,3 +1,24 @@
 table {
   width: 100%;
 }
+
+.loading-container {
+  background-color: #FFF;
+  color: #0000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+::ng-deep .mdc-circular-progress__spinner-layer circle {
+  stroke: #000;
+}
+
+.campo-busca {
+  width: 100%;
+}
+
+mat-label {
+  color: #000;
+}

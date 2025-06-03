@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { Filme } from '../../../models/filme';
 import { SwapiService } from '../../../services/swapi.service';
 import { RetornoAPI } from '../../../models/retorno-api';
@@ -107,7 +113,14 @@ const ELEMENT_DATA: Filme[] = [
   selector: 'app-filmes',
   standalone: true,
   imports: [
-    MatTableModule
+    CommonModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatFormField,
+    MatLabel,
+    MatInputModule,
+    MatPaginatorModule
   ],
   templateUrl: './filmes.component.html',
   styleUrl: './filmes.component.css'
@@ -117,10 +130,44 @@ export class FilmesComponent implements OnInit {
 
   origem: string = 'films';
   filmes!: Filme[];
+  carregando: boolean = true;
+  totalDeFilmes: number = 0;
+  tamanhoPagina: number = 10;
+  pagina: number = 1;
+  busca?: string;
 
   ngOnInit(): void {
-    this.swapiService.get<RetornoAPI<Filme>>(this.origem)
-    .then(filmes => this.filmes = filmes.results);
+    this.carregando = true;
+    this.swapiService
+      .get<RetornoAPI<Filme>>(this.origem)
+      .then(filmes => {
+        this.filmes = filmes.results;
+        this.totalDeFilmes = filmes.count;
+        this.carregando = false;
+      });
+  }
+
+buscar(event: any) {
+    this.carregando = true;
+    this.busca = event.target.value;
+    this.swapiService
+      .get<RetornoAPI<Filme>>(this.origem, this.busca)
+      .then(filmes => {
+        this.filmes = filmes.results;
+        this.totalDeFilmes = filmes.count;
+        this.carregando = false;
+      });
+  }
+
+  onPageChange(event: any) {
+    this.carregando = true;
+    this.swapiService
+      .get<RetornoAPI<Filme>>(this.origem, this.busca, event.pageIndex + 1)
+      .then(filmes => {
+        this.filmes = filmes.results;
+        this.totalDeFilmes = filmes.count;
+        this.carregando = false;
+      });
   }
 
   displayedColumns: string[] = ['episode_id', 'title', 'opening_crawl', 'release_date'];

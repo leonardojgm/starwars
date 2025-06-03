@@ -11,9 +11,19 @@ export class SwapiService {
 
   url : string = 'https://swapi.py4e.com/api/';
 
-  async get<T>(rota: string) : Promise<T> {
-    const response = await fetch(`${this.url}${rota}/`);
-    
+  async get<T>(rota: string, search?: string, page?: number) : Promise<T> {
+    let param = ''
+
+    if (search && page) {
+      param = `?search=${search}&page=${page}`
+    } else if (search) {
+      param = `?search=${search}`
+    } else if (page) {
+      param = `?page=${page}`
+    }
+
+    const response = await fetch(`${this.url}${rota}${param}`);
+
     return await response.json();
   }
 }

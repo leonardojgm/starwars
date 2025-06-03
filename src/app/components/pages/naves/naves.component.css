@@ -1,0 +1,59 @@
+table {
+  width: 100%;
+}
+
+.loading-container {
+  background-color: #FFF;
+  color: #0000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+::ng-deep .mdc-circular-progress__spinner-layer circle {
+  stroke: #000;
+}
+
+.campo-busca {
+  width: 100%;
+}
+
+mat-label {
+  color: #000;
+}
+
+.tabela-container {
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+.linha-clicavel {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.linha-clicavel:hover {
+  background-color: #f5f5f5;
+}
+
+.linha-expandida {
+    height: 0;
+    max-height: 0;
+}
+
+.linha-expandida td {
+  padding: 0;
+  border: none;
+}
+
+.detalhes {
+  padding: 16px;
+  background-color: #fafafa;
+  border-top: 1px solid #ddd;
+}
+
+.detalhes p {
+  color: #000;
+}
