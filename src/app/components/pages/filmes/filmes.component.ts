@@ -1,18 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { Filme } from '../../../models/filme';
+import { SwapiService } from '../../../services/swapi.service';
+import { RetornoAPI } from '../../../models/retorno-api';
 
-export interface Filmes {
-  title: string;
-  episode_id: number;
-  opening_crawl: string;
-  director: string;
-  producer: string;
-  release_date: string;
-  created: string;
-  edited: string;
-}
-
-const ELEMENT_DATA: Filmes[] = [
+const ELEMENT_DATA: Filme[] = [
 		{
 			title: "A New Hope",
 			episode_id: 4,
@@ -21,7 +13,13 @@ const ELEMENT_DATA: Filmes[] = [
 			producer: "Gary Kurtz, Rick McCallum",
 			release_date: "1977-05-25",
 			created: "2014-12-10T14:23:31.880000Z",
-			edited: "2014-12-20T19:49:45.256000Z"
+			edited: "2014-12-20T19:49:45.256000Z",
+      url: "",
+      characters: [],
+      planets: [],
+      starships: [],
+      vehicles: [],
+      species: []
 		},
 		{
 			title: "The Empire Strikes Back",
@@ -32,6 +30,12 @@ const ELEMENT_DATA: Filmes[] = [
 			release_date: "1980-05-17",
 			created: "2014-12-12T11:26:24.656000Z",
 			edited: "2014-12-15T13:07:53.386000Z",
+      url: "",
+      characters: [],
+      planets: [],
+      starships: [],
+      vehicles: [],
+      species: []
 		},
 		{
 			title: "Return of the Jedi",
@@ -41,7 +45,13 @@ const ELEMENT_DATA: Filmes[] = [
 			producer: "Howard G. Kazanjian, George Lucas, Rick McCallum",
 			release_date: "1983-05-25",
 			created: "2014-12-18T10:39:33.255000Z",
-			edited: "2014-12-20T09:48:37.462000Z"
+			edited: "2014-12-20T09:48:37.462000Z",
+      url: "",
+      characters: [],
+      planets: [],
+      starships: [],
+      vehicles: [],
+      species: []
 		},
 		{
 			title: "The Phantom Menace",
@@ -51,7 +61,13 @@ const ELEMENT_DATA: Filmes[] = [
 			producer: "Rick McCallum",
 			release_date: "1999-05-19",
 			created: "2014-12-19T16:52:55.740000Z",
-			edited: "2014-12-20T10:54:07.216000Z"
+			edited: "2014-12-20T10:54:07.216000Z",
+      url: "",
+      characters: [],
+      planets: [],
+      starships: [],
+      vehicles: [],
+      species: []
 		},
 		{
 			title: "Attack of the Clones",
@@ -61,7 +77,13 @@ const ELEMENT_DATA: Filmes[] = [
 			producer: "Rick McCallum",
 			release_date: "2002-05-16",
 			created: "2014-12-20T10:57:57.886000Z",
-			edited: "2014-12-20T20:18:48.516000Z"
+			edited: "2014-12-20T20:18:48.516000Z",
+      url: "",
+      characters: [],
+      planets: [],
+      starships: [],
+      vehicles: [],
+      species: []
 		},
 		{
 			title: "Revenge of the Sith",
@@ -71,7 +93,13 @@ const ELEMENT_DATA: Filmes[] = [
 			producer: "Rick McCallum",
 			release_date: "2005-05-19",
 			created: "2014-12-20T18:49:38.403000Z",
-			edited: "2014-12-20T20:47:52.073000Z"
+			edited: "2014-12-20T20:47:52.073000Z",
+      url: "",
+      characters: [],
+      planets: [],
+      starships: [],
+      vehicles: [],
+      species: []
 		}
 	];
 
@@ -84,7 +112,16 @@ const ELEMENT_DATA: Filmes[] = [
   templateUrl: './filmes.component.html',
   styleUrl: './filmes.component.css'
 })
-export class FilmesComponent {
+export class FilmesComponent implements OnInit {
+  constructor(private swapiService: SwapiService) { }
+
+  origem: string = 'films';
+  filmes!: Filme[];
+
+  ngOnInit(): void {
+    this.swapiService.get<RetornoAPI<Filme>>(this.origem)
+    .then(filmes => this.filmes = filmes.results);
+  }
+
   displayedColumns: string[] = ['episode_id', 'title', 'opening_crawl', 'release_date'];
-  dataSource = ELEMENT_DATA;
 }

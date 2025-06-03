@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "https://swapi.py4e.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
