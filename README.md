@@ -1,3 +1,16 @@
+Realizado no Desafio https://7daysofcode.io/
+
+Angular
+Consumindo a API de filmes do 'Star Wars' e criando telas para exibir esses dados
+
+![image](https://github.com/user-attachments/assets/b599af12-ef7f-4783-af22-0da2d269a4fe)
+
+![image](https://github.com/user-attachments/assets/041cb5ae-09f4-4885-b8d4-4e13eab35283)
+
+![image](https://github.com/user-attachments/assets/bec87e8b-c0dc-4c11-abe0-0f0ec021a0c1)
+
+![image](https://github.com/user-attachments/assets/9b31762e-dc82-47a6-ae5d-c4e66c8a61a2)
+
 # Starwars
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
